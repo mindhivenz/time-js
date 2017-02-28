@@ -1,8 +1,9 @@
 import extendClock from './extendClock'
 
 
-const clock = () => new Date()
-
-export default () => ({
-  clock: extendClock(clock),
-})
+export default () => {
+  const clock = () => new Date()
+  return {
+    clock: extendClock(clock),
+  }
+}
