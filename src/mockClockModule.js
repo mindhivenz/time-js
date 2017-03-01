@@ -1,3 +1,7 @@
+import dateClone from 'date-fns/parse'
+import addMilliseconds from 'date-fns/add_milliseconds'
+import differenceInMilliseconds from 'date-fns/difference_in_milliseconds'
+
 import extendClock from './extendClock'
 
 
@@ -5,18 +9,19 @@ export default () => {
   const initialTime = new Date()
   let testTime = initialTime
 
-  const clock = () => testTime
+  const clock = () =>
+    dateClone(testTime)
 
   clock.adjust = (func) => {
-    testTime = func(testTime)
-    return testTime
+    testTime = dateClone(func(dateClone(testTime)))
+    return clock()
   }
   clock.sleep = (milliseconds) => {
-    clock.adjust(time => new Date(time + milliseconds))
+    clock.adjust(time => addMilliseconds(time, milliseconds))
     return Promise.resolve()
   }
   clock.totalAdjustedMs = () =>
-    testTime - initialTime
+    differenceInMilliseconds(testTime, initialTime)
 
   extendClock(clock)
 
