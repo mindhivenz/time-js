@@ -2,15 +2,12 @@ import dateClone from 'date-fns/parse'
 import addMilliseconds from 'date-fns/add_milliseconds'
 import differenceInMilliseconds from 'date-fns/difference_in_milliseconds'
 
-import extendClock from './extendClock'
-
 
 export default () => {
   const initialTime = new Date()
   let testTime = initialTime
 
-  const clock = () =>
-    dateClone(testTime)
+  const clock = () => dateClone(testTime)
 
   clock.adjust = (func) => {
     testTime = dateClone(func(dateClone(testTime)))
@@ -22,8 +19,5 @@ export default () => {
   }
   clock.totalAdjustedMs = () =>
     differenceInMilliseconds(testTime, initialTime)
-
-  extendClock(clock)
-
   return { clock }
 }
