@@ -1,4 +1,4 @@
-import { app } from '@mindhive/di'
+import { clock as defaultClock } from './index'
 
 
 export default class ProgressiveBackoff {
@@ -8,22 +8,23 @@ export default class ProgressiveBackoff {
     collisionAvoidanceMaxRandomMs = 500,
     retryMultiplier = 2,
     maxMs = 10 * 60 * 1000,
+    clock = defaultClock,
   } = {}) {
     this.initialMs = Math.max(initialMs, 1)
     this.collisionAvoidanceMaxRandomMs = collisionAvoidanceMaxRandomMs
     this.retryMultiplier = retryMultiplier
     this.maxMs = maxMs
-    this.reset()
+    this.clock = clock
+    this.baseDelayMs = this.initialMs
   }
 
   async sleep() {
-    const { clock } = app()
     const delayMs = this.baseDelayMs + (this.collisionAvoidanceMaxRandomMs * Math.random())
     this.baseDelayMs = delayMs * this.retryMultiplier
     if (this.maxMs && this.baseDelayMs > this.maxMs) {
       this.baseDelayMs = this.maxMs
     }
-    await clock.sleep(delayMs)
+    await this.clock.sleep(delayMs)
   }
 
   reset() {

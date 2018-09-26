@@ -78,12 +78,6 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@mindhive/di@^4.1.1":
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/@mindhive/di/-/di-4.3.2.tgz#28f0ff8aebebe54a15832292c051b50ce160b1dc"
-  dependencies:
-    babel-runtime "^6.23.0"
-
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
